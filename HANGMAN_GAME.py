@@ -130,15 +130,10 @@ def check_win(secret_word, old_letters_guessed):
 
 
 # מדובר בפונקציה הזאת, שצריך שהמספר אינדקס שאבחר בקובץ(המילה) תהיה המילה של הניחוש
-def choose_word(file_path, index):
-    with open('C:/python/words.txt', 'r') as fp:
-        sentence = fp.read().split(" ")
-        unique_words = set(sentence)
-        num_words = len(unique_words)
-        index = - 1
-        index %= len(sentence)
-        word = sentence[index]
-        return num_words, word
+def choose_word(file_path: str, index: int) ->tuple:
+  with open(file_path, 'r') as f:
+    words = f.read().split()
+  return len(set(words)), words[ (index + 1) % len(words)]
 
 
 def main():
@@ -147,11 +142,10 @@ def main():
     print('WELCOME TO HANGMAN GAME')
     print(print_hangman(1))
     file_path = input("insert path: ").replace('\\', '\\\\')
-    index = input("enter a number: ")
+    index = int(input("enter a number: "))
     secret_word = choose_word(file_path,index)
     print(secret_word)
     while True:
-        choose_word(file_path, index)
         letter_guessed = input('Guess a letter: ')
         if try_update_letter_guessed(letter_guessed, old_letters_guessed):
             print(old_letters_guessed)
